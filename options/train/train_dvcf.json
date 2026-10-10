@@ -1,0 +1,83 @@
+{
+  "name": "DVCF_train"   
+  , "use_tb_logger": true
+  , "model":"dvcf"
+  , "scale": 2
+  , "gpu_ids": [0]
+
+  , "datasets": {
+    "train": {
+      "name": "CCPs_result"
+      , "mode": "LRHR"
+      , "dataroot_HR": "datasets/train/CCPs/GT"
+      , "dataroot_SIM": "datasets/train/CCPs/SIM"
+      , "dataroot_LR": "datasets/train/CCPs/WF"
+      , "subset_file": null
+      , "use_shuffle": true
+      , "n_workers": 10
+      , "batch_size": 2
+      , "HR_size": 256
+      , "use_flip": true
+      , "use_rot": true
+    }
+    , "val": {
+      "name": "MTs_val"
+      , "mode": "LRHR"
+      , "dataroot_HR": "datasets/test/CCPs/GT"
+      , "dataroot_SIM": "datasets/test/CCPs/SIM"
+      , "dataroot_LR": "datasets/test/CCPs/WF"
+    }
+  }
+
+  , "path": {
+    "root": "."
+  }
+
+  , "network_G": {
+    "which_model_G": "dvcf_net" 
+    , "norm_type": null
+    , "mode": "CNA"
+    , "nf": 64
+    , "nb": 23
+    , "in_nc": 1
+    , "out_nc": 1
+    , "gc": 32
+    , "group": 1
+  }
+
+  , "network_D": {
+    "which_model_D": "dvcf_discriminator"
+    , "norm_type": "batch"
+    , "act_type": "leakyrelu"
+    , "mode": "CNA"
+    , "nf": 64
+    , "in_nc": 1
+  }
+
+  , "train": {
+    "lr_G": 1e-4
+    , "weight_decay_G": 0
+    , "beta1_G": 0.9
+    , "lr_D": 1e-4
+    , "weight_decay_D": 0
+    , "beta1_D": 0.9
+    , "lr_scheme": "MultiStepLR"
+    , "lr_steps": [50000, 100000, 200000, 300000]
+    , "lr_gamma": 0.5
+
+    , "pixel_criterion": "l1"
+    , "pixel_weight": 5
+    , "feature_criterion": "l1"
+    , "feature_weight": 0.5
+    , "gan_type": "vanilla"
+    , "gan_weight": 0.5
+    , "manual_seed": 9
+    , "niter": 5e5
+    , "val_freq": 2000
+  }
+
+  , "logger": {
+    "print_freq": 200
+    , "save_checkpoint_freq": 2000
+  }
+}
