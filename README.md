@@ -1,7 +1,14 @@
 # DVCF-Net: Difference-aware Verification Cross Fusion for Microscopy Image Reconstruction
 
+
+
 ![network](figs/Network1.png)
+
 DVCF-Net is a dual-input microscopy reconstruction network that combines a low-resolution wide-field (WF) image with a corresponding structured illumination microscopy (SIM) reconstruction. It aims to preserve reliable structures observed in WF imaging while selectively incorporating high-frequency SIM information and suppressing inconsistent or potentially artifactual details.
+
+
+![Dual_Livecell](figs/Fig_Dual_Livecell.png)
+
 
 This repository contains a standalone PyTorch implementation for training and inference, pretrained weights for the microtubule examples, and two paired WF/SIM test images.
 
